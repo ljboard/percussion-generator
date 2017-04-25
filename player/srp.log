@@ -1,8 +1,8 @@
 debug.srp created srp.log for error report...
 runtime exception handler called
-exception is: [31;49mbad key[39;49m
-frame variables: {i: 0}
-frame pc: 501
+exception is: [31;49mglobal variable is unbound - loop_on[39;49m
+frame variables: {i: nil}
+frame pc: 32
 frame method: play_a_measure
 frame class: nil
 
@@ -14,37 +14,37 @@ Method [32;49m<callin_method>[39;49m in class [34;49mnil[39;49m
 -----------------------------------------------------
 Method [32;49mwxs_sched_poll[39;49m in class [34;49mnil[39;49m, char 26004 in file 
     /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'time': 1553.47}
+Frame variables: {'time': 272.001}
  615:     rtsched.poll(time)
                       ^
 -----------------------------------------------------
 Method [32;49mpoll[39;49m in class [34;49mScheduler[39;49m, char 11217 in file 
     /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'when': 1553.47, 'event': [1553.47, <obj@0x10b16e318>, 'activate', []], 'target': <obj@0x10b16e318>, 'message': 'activate', 'parms': []}
+Frame variables: {'when': 272.001, 'event': [272, <obj@0x11051e388>, 'activate', []], 'target': <obj@0x11051e388>, 'message': 'activate', 'parms': []}
  231:             general_apply(target, message, parms)
                                ^
 -----------------------------------------------------
 Method [32;49mgeneral_apply[39;49m in class [34;49mnil[39;49m, char 24614 in file 
     /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'target': <obj@0x10b16e318>, 'message': 'activate', 'parms': []}
+Frame variables: {'target': <obj@0x11051e388>, 'message': 'activate', 'parms': []}
  568:         sendapply(target, message, parms)
                                                ^
 -----------------------------------------------------
 Method [32;49mactivate[39;49m in class [34;49mVscheduler[39;49m, char 18477 in file 
     /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'event': [2532, <obj@0x10b11e858>, 'beat_update', []], 'target': <obj@0x10b11e858>, 'message': 'beat_update', 'parms': []}
+Frame variables: {'event': [672, <obj@0x1104ce850>, 'beat_update', []], 'target': <obj@0x1104ce850>, 'message': 'beat_update', 'parms': []}
  423:             general_apply(target, message, parms)
                                ^
 -----------------------------------------------------
 Method [32;49mgeneral_apply[39;49m in class [34;49mnil[39;49m, char 24614 in file 
     /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'target': <obj@0x10b11e858>, 'message': 'beat_update', 'parms': []}
+Frame variables: {'target': <obj@0x1104ce850>, 'message': 'beat_update', 'parms': []}
  568:         sendapply(target, message, parms)
                                                ^
 -----------------------------------------------------
 Method [32;49mbeat_update[39;49m in class [34;49mStage[39;49m, char 3014 in file 
     /Users/raymondboard/Documents/SophomoreYear/15323/p5/player/../cond/stage.srp
-Frame variables: {'bnow': 2532}
+Frame variables: {'bnow': 672}
  103:         metronome()
                        ^
 -----------------------------------------------------
@@ -54,12 +54,12 @@ Frame variables: {'pitch': 66}
  118:                     play_a_measure() // implemented in player only
                                         ^
 -----------------------------------------------------
-Method [32;49mplay_a_measure[39;49m in class [34;49mnil[39;49m, char 4217 in file 
-    /Users/raymondboard/Documents/SophomoreYear/15323/p5/player/playerdemo.srp
-Frame variables: {'i': 0}
- 134:             time = (low_beats[i]) - 1
-                                   ^
-[31;49mbad key[39;49m
+Method [32;49mplay_a_measure[39;49m in class [34;49mnil[39;49m, char 1804 in file 
+    /Users/raymondboard/Documents/SophomoreYear/15323/p5/player/player.srp
+Frame variables: {'i': nil}
+  46:     if (start or (not loop_on)):
+                            ^
+[31;49mglobal variable is unbound - loop_on[39;49m
 1> debugger reads 
 
 ? - stack trace

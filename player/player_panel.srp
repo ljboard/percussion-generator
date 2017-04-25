@@ -174,12 +174,11 @@ class Player_panel:
 
         // loop
         CUSTOMS_Y = CUSTOMS_Y + TEXT_H + 50
-        loop_button = Checkbox(win, "Loop", CUSTOMS_X, CUSTOMS_Y, 100, CTRL_H)
-        loop_button.set_value(t)
-        loop_button.method = 'loop_handler'
-        loop_button.target = this
-
-
+        loop_options = Radiobox(win, "Number of Repeats", ["None", "1", "2", "3", "4"], 
+                                CUSTOMS_X, CUSTOMS_Y, 150, 150)
+        loop_options.set_value(0)
+        loop_options.method = 'loop_handler'
+        loop_options.target = this
 
         if get_os() == 'windows':
             update_font(8)
@@ -188,7 +187,11 @@ class Player_panel:
         player_enabled = x
 
     def loop_handler(obj, event, x, y)
-        loop_on = x
+        loops = x
+        current_measure = 0
+        low_measures = []
+        mid_measures = []
+        high_measures = []
 
     // low instrument
     def low_instrument_handler(obj, event, x, y) 
