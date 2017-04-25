@@ -1,0 +1,171 @@
+# player.srp - player
+#
+# Lizzy Board
+# April 2017
+
+SERVICE = "demo"
+
+require "playerbase"
+
+all_beats = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5]
+low_start_beat = 2 #all_beats[int(random() * len(all_beats))]
+mid_start_beat = 1 #all_beats[int(random() * len(all_beats))]
+high_start_beat = 1 #all_beats[int(random() * len(all_beats))]
+
+low_beats = [low_start_beat, low_start_beat]
+mid_beats = [mid_start_beat, mid_start_beat]
+high_beat = [high_start_beat, high_start_beat]
+
+start = true
+
+def play_a_measure()
+    # compute a measure using these variables:
+    #    cur_style - a symbol representing style to play (if
+    #       this is not your style, do not play)
+    #    cur_start_beat - what beat to start on if you are stopped
+    #    cur_stop_beat - what beat to stop on if you have started (you can
+    #       stop slightly late; generally you should not start any notes 
+    #       at or after tm_stop_beat but you can play a short note on 
+    #       tm_stop_beat if it is stylistically sensible.)
+    #    cur_beats_per_measure - the current time signature as an integer
+    #    cur_bps - current beats per second (the vtsched will implement this
+    #       but reading the vtsched timemap slope is not reliable because
+    #       vtsched may be updated instantaneously after this call.
+    #    cur_scale - boolean array representing current scale
+    #    cur_chord - boolean array representing current chord
+    #    cur_bass - integer representing root of chord
+    #
+    display "play_a_measure", cur_beats_per_measure, cur_bps
+    display "    ", cur_scale, cur_chord, cur_bass
+    # Use EPSILON here because comparing floats for equality is not
+    #   reliable without very difficult analysis. So, instead of
+    #   x >= y, we write x + EPSILON > y
+
+    rock_low_beats = {
+      1: {1: 0, 2.5: 0.7, 3: 0.3}, 
+      1.5: {1: 1}, 
+      2: {1: 1}, 
+      2.5: {3: 0.5, 3.5: 0.3, 4.5: 0.2}, 
+      3: {1: 0.5, 4.5: 0.5}, 
+      3.5: {1: 1}, 
+      4: {1: 1}, 
+      4.5: {1: .8, 2.5: .2} 
+    }
+
+    rock_mid_beats = {
+      1: {1.5: .5, 2: .5}, 
+      1.5: {2: 1}, 
+      2: {2: .1, 2.5: .4, 3.5: .2, 4: .3}, 
+      2.5: {3: 1}, 
+      3: {1: .2, 3.5: .4, 4: .4}, 
+      3.5: {4: .7, 4.5: .3}, 
+      4: {1: .5, 2: .2, 4.5: .3}, 
+      4.5: {1: 1}
+    }
+
+    rock_high_beats = {
+      1: {1.5: 1}, 
+      1.5: {2: .8, 3.5: .2}, 
+      2: {2.5: 1}, 
+      2.5: {3: 1}, 
+      3: {1.5: .8, 3.5: .2}, 
+      3.5: {4: 1}, 
+      4: {4.5: 1}, 
+      4.5: {1: .7, 1.5: .1, 4.5: .2}
+    } 
+
+    jazz_high_beats = {
+      1: {2: 1},
+      2: {2.67: 1},
+      2.67: {3: 1}, 
+      3: {1: .5, 4: .5},
+      4: {4.67: 1},
+      4.67: {1: 1}
+    }
+
+    jazz_mid_beats = {
+      1: {2: 1}, 
+      2: {2.5: 1}, 
+      2.5: {2.75: 1},
+      2.75: {4: 8},
+      4: {4.25: .1, 4.5: .9},
+      4.25: {4.5: 1},
+      4.5: {4.75: 1}, 
+      4.75: {1: 1}
+    }
+
+    jazz_low_beats = {
+      1: {2: 1},
+      2: {4: .8, 1: .2},
+      4: {2: .8, 4: .2}
+    }
+
+    if cur_style == 'rock'
+        if (start or (not loop_on)):
+            low_beats = beat_measure(low_start_beat, rock_low_beats)
+            mid_beats = beat_measure(mid_start_beat, rock_mid_beats)
+            high_beats = beat_measure(high_start_beat, rock_high_beats)
+
+        for i = 0 to (len(low_beats)-1):
+            time = (low_beats[i]) - 1
+            vtsched.cause(time, midi_out, 'note', 9, low_instrument, low_instrument_volume, 1)
+
+        for i = 0 to (len(mid_beats)-1):
+            time = (mid_beats[i]) - 1
+            vtsched.cause(time, midi_out, 'note', 9, mid_instrument, mid_instrument_volume, 1)
+
+        for i = 0 to (len(high_beats)-1):
+            time = (high_beats[i]) - 1
+            vtsched.cause(time, midi_out, 'note', 9, high_instrument, high_instrument_volume, 1)
+
+
+
+
+    if cur_style == 'jazz'
+        if (start or (not loop_on)):
+            low_beats = beat_measure(low_start_beat, jazz_low_beats)
+            mid_beats = beat_measure(mid_start_beat, jazz_mid_beats)
+            high_beats = beat_measure(high_start_beat, jazz_high_beats)
+
+        for i = 0 to (len(low_beats)-1):
+            time = (low_beats[i]) - 1
+            vtsched.cause(time, midi_out, 'note', 9, low_instrument, low_instrument_volume, 1)
+
+        for i = 0 to (len(mid_beats)-1):
+            time = (mid_beats[i]) - 1
+            vtsched.cause(time, midi_out, 'note', 9, mid_instrument, mid_instrument_volume, 1)
+
+        for i = 0 to (len(high_beats)-1):
+            time = (high_beats[i]) - 1
+            vtsched.cause(time, midi_out, 'note', 9, high_instrument, high_instrument_volume, 1)
+
+
+
+    low_start_beat = low_beats[len(low_beats) - 1]
+    mid_start_beat = mid_beats[len(mid_beats) - 1]
+    high_start_beat = high_beats[len(high_beats) - 1]
+    start = false
+
+def pick_next(prev_beat, curr_beats): 
+    states = curr_beats[prev_beat]
+    i = random()
+    c = 0
+    keys = states.keys()
+    for j = 0 to len(keys): 
+        beat = keys[j]
+        c = c + states[beat]
+        if (c > i): 
+            return beat
+
+def beat_measure(prev_beat, curr_beats): # returns a list of beat numbers
+    beats = [prev_beat]
+    current_beat = pick_next(prev_beat, curr_beats)
+    check = 0
+    while (current_beat > prev_beat and check < 8): 
+        beats.append(current_beat)
+        prev_beat = current_beat
+        current_beat = pick_next(current_beat, curr_beats)
+        check = check + 1
+    beats.append(current_beat)
+    return beats
+
