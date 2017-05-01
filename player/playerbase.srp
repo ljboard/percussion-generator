@@ -14,7 +14,7 @@ CONDUCTOR = "cond"
 
 current_bps = 1 // tempo currently in effect
 base_beat_time = 0 // time of the starting beat
-current_beats_per_measure = 4
+cur_beats_per_measure = 4
 
 joined = false  // have we joined the orchestra yet?
 have_timemap = false // set when timemap is first called
@@ -160,6 +160,7 @@ cur_chord = [0 for i = 0 to 12] // similar
 cur_bass = 0 // C initially     // integer pitch class from 0 thru 11
 
 loops = 0
+pause = -1
 current_measure = 0
 low_measures = []
 mid_measures = []

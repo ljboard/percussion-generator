@@ -173,12 +173,26 @@ class Player_panel:
         high_inst_vol_slid.method = 'high_instrument_vol_handler'
 
         // loop
-        CUSTOMS_Y = CUSTOMS_Y + TEXT_H + 50
-        loop_options = Radiobox(win, "Number of Repeats", ["None", "1", "2", "3", "4"], 
-                                CUSTOMS_X, CUSTOMS_Y, 150, 150)
+        CUSTOMS_Y = CUSTOMS_Y + TEXT_H + 20
+        loop_options = Radiobox(win, "Number of Repeats", ["No looping", "1", "2", "3", "4"], 
+                                CUSTOMS_X, CUSTOMS_Y, 150, 130)
         loop_options.set_value(0)
         loop_options.method = 'loop_handler'
         loop_options.target = this
+
+        CUSTOMS_Y = CUSTOMS_Y + TEXT_H + 150
+        Statictext(win, "Add Pause", CUSTOMS_X, CUSTOMS_Y, TEXT_W, TEXT_H)
+        pause_ch = Choice(win,CUSTOMS_X + 2*TEXT_W, CUSTOMS_Y, STAT_W, CTRL_H)
+        PAUSE_CHOICES = ["None", 
+                         "Random"]
+        var b
+        for b = 0 to cur_beats_per_measure: 
+            PAUSE_CHOICES.append(str(b+1))
+        for ch in PAUSE_CHOICES: pause_ch.append(ch)
+        pause_ch.set_value(PAUSE_CHOICES[0])
+        pause_ch.target = this
+        pause_ch.method = 'pause_handler'
+
 
         if get_os() == 'windows':
             update_font(8)
@@ -192,6 +206,14 @@ class Player_panel:
         low_measures = []
         mid_measures = []
         high_measures = []
+
+    def pause_handler(obj, event, x, y)
+        if (x == 1): 
+            pause = 1 + int(random() * cur_beats_per_measure)
+        else: if (x == 0): 
+            pause = -1
+        else:
+            pause = int(x) - 1
 
     // low instrument
     def low_instrument_handler(obj, event, x, y) 

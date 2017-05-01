@@ -1,10 +1,10 @@
 debug.srp created srp.log for error report...
 runtime exception handler called
-exception is: [31;49mglobal variable is unbound - loop_on[39;49m
-frame variables: {i: nil}
-frame pc: 32
-frame method: play_a_measure
-frame class: nil
+exception is: [31;49mtype error, expected a number[39;49m
+frame variables: {obj: <obj@0x10cbb2e90>, event: 11, x: 2, y: 0}
+frame pc: 29
+frame method: pause_handler
+frame class: Player_panel
 
 Debugger invoked.
 -----------------------------------------------------
@@ -12,61 +12,39 @@ Method [32;49m<global>[39;49m in class [34;49mnil[39;49m
 -----------------------------------------------------
 Method [32;49m<callin_method>[39;49m in class [34;49mnil[39;49m
 -----------------------------------------------------
-Method [32;49mwxs_sched_poll[39;49m in class [34;49mnil[39;49m, char 26004 in file 
-    /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'time': 272.001}
- 615:     rtsched.poll(time)
+Method [32;49mwxs_handler[39;49m in class [34;49mnil[39;49m, char 892 in file 
+    /Users/raymondboard/serpent/wxslib/wxserpent.srp
+Frame variables: {'id': 50, 'event': 11, 'x': 3, 'y': 0, 'obj': <obj@0x10cbb2e90>}
+  30:             return obj.handle(event, x, y)
+                                   ^
+-----------------------------------------------------
+Method [32;49mhandle[39;49m in class [34;49mChoice[39;49m, char 5616 in file 
+    /Users/raymondboard/serpent/wxslib/wxserpent.srp
+Frame variables: {'event': 11, 'x': 3, 'y': 0}
+ 193:         super.handle(event, value(), 0)
+                          ^
+-----------------------------------------------------
+Method [32;49mhandle[39;49m in class [34;49mControl[39;49m, char 4052 in file 
+    /Users/raymondboard/serpent/wxslib/wxserpent.srp
+Frame variables: {'event': 11, 'x': "2", 'y': 0}
+ 135:         if handle_target_method(event, x, y, target, method)
+                                     ^
+-----------------------------------------------------
+Method [32;49mhandle_target_method[39;49m in class [34;49mControl[39;49m, char 4527 in file 
+    /Users/raymondboard/serpent/wxslib/wxserpent.srp
+Frame variables: {'event': 11, 'x': "2", 'y': 0, 'trgt': <obj@0x10cbb06e8>, 'mthd': 'pause_handler', 'meth': nil, 'i': nil}
+ 148:             dispatch(event, x, y, trgt, mthd)
+                          ^
+-----------------------------------------------------
+Method [32;49mdispatch[39;49m in class [34;49mControl[39;49m, char 4749 in file 
+    /Users/raymondboard/serpent/wxslib/wxserpent.srp
+Frame variables: {'event': 11, 'x': "2", 'y': 0, 'trgt': <obj@0x10cbb06e8>, 'mthd': 'pause_handler'}
+ 156:             send(trgt, mthd, this, event, x, y)
                       ^
 -----------------------------------------------------
-Method [32;49mpoll[39;49m in class [34;49mScheduler[39;49m, char 11217 in file 
-    /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'when': 272.001, 'event': [272, <obj@0x11051e388>, 'activate', []], 'target': <obj@0x11051e388>, 'message': 'activate', 'parms': []}
- 231:             general_apply(target, message, parms)
-                               ^
------------------------------------------------------
-Method [32;49mgeneral_apply[39;49m in class [34;49mnil[39;49m, char 24614 in file 
-    /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'target': <obj@0x11051e388>, 'message': 'activate', 'parms': []}
- 568:         sendapply(target, message, parms)
-                                               ^
------------------------------------------------------
-Method [32;49mactivate[39;49m in class [34;49mVscheduler[39;49m, char 18477 in file 
-    /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'event': [672, <obj@0x1104ce850>, 'beat_update', []], 'target': <obj@0x1104ce850>, 'message': 'beat_update', 'parms': []}
- 423:             general_apply(target, message, parms)
-                               ^
------------------------------------------------------
-Method [32;49mgeneral_apply[39;49m in class [34;49mnil[39;49m, char 24614 in file 
-    /Users/raymondboard/serpent/lib/sched.srp
-Frame variables: {'target': <obj@0x1104ce850>, 'message': 'beat_update', 'parms': []}
- 568:         sendapply(target, message, parms)
-                                               ^
------------------------------------------------------
-Method [32;49mbeat_update[39;49m in class [34;49mStage[39;49m, char 3014 in file 
-    /Users/raymondboard/Documents/SophomoreYear/15323/p5/player/../cond/stage.srp
-Frame variables: {'bnow': 672}
- 103:         metronome()
-                       ^
------------------------------------------------------
-Method [32;49mmetronome[39;49m in class [34;49mStage[39;49m, char 3526 in file 
-    /Users/raymondboard/Documents/SophomoreYear/15323/p5/player/../cond/stage.srp
-Frame variables: {'pitch': 66}
- 118:                     play_a_measure() // implemented in player only
-                                        ^
------------------------------------------------------
-Method [32;49mplay_a_measure[39;49m in class [34;49mnil[39;49m, char 1804 in file 
-    /Users/raymondboard/Documents/SophomoreYear/15323/p5/player/player.srp
-Frame variables: {'i': nil}
-  46:     if (start or (not loop_on)):
+Method [32;49mpause_handler[39;49m in class [34;49mPlayer_panel[39;49m, char 9159 in file 
+    /Users/raymondboard/Documents/SophomoreYear/15323/p5/player/player_panel.srp
+Frame variables: {'obj': <obj@0x10cbb2e90>, 'event': 11, 'x': "2", 'y': 0}
+ 217:             pause = x - 1
                             ^
-[31;49mglobal variable is unbound - loop_on[39;49m
-1> debugger reads 
-
-? - stack trace
-<id> - print variable value
-* - print all variables
-+ - up one level (to caller)
-- - down one level (to callee)
-=<expr> - evaluate expression
-! - exit
-> - resume execution
+[31;49mtype error, expected a number[39;49m
